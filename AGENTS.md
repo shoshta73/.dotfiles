@@ -6,21 +6,40 @@ This document provides guidelines for agentic coding assistants working on this 
 
 This is a personal dotfiles repository containing configuration files for Linux/Unix systems. The repository follows a bare git approach where `$HOME` is the worktree.
 
+### Repository Structure
+- `.bash/` - Bash-specific configurations (aliases, prompt)
+- `.bashrc`, `.bash_profile`, `.profile` - Shell initialization files
+- `.vscode/` - VS Code settings and configurations
+- `.editorconfig` - Editor formatting rules (repository-wide)
+
+### Key Features
+- Bare git workflow: All files are tracked in `$HOME` with git dir at `$HOME/.dotfiles/`
+- Arch Linux focused (uses `pacman` for package management)
+- Modular bash configuration with separate files in `.bash/` directory
+- VS Code configured to recognize dotfiles as shell scripts
+
 ## Build/Test/Lint Commands
 
 ### Shell Scripts
 - **Syntax check**: `bash -n <script.sh>` - Check syntax without executing
 - **Shellcheck**: `shellcheck <script.sh>` - Lint shell scripts (requires shellcheck)
-- **Test single function**: Source the script and test specific functions manually
+- **Run single script**: `./install.sh` - Main installation script (uses set -euo pipefail)
 
 ### Configuration Files
-- Most config files (vim, zsh, etc.) can be validated by their respective applications
-- **Vim**: `vim -u <vimrc> -c "quit"` - Test vim configuration
-- **Zsh**: `zsh -n <zshrc>` - Syntax check zsh configuration
+- **Bash**: `bash -n ~/.bashrc` - Syntax check bashrc
+- **Bash**: `bash -c 'source ~/.bashrc; type dotfiles'` - Verify alias works
+- **Test source file**: `source ~/.bash/colors && echo "$COLOR_RESET"` - Test config loads
 
-### Git Operations
-- Bare git alias: `git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME`
-- Common workflow: Use the `dotfiles` alias defined in README
+### Git Operations (Bare Repository)
+- **Add**: `dotfiles add <path>` (alias from ~/.bash/aliases)
+- **Commit**: `dotfiles commit -m "message"`
+- **Status**: `dotfiles status`
+- **Diff**: `dotfiles diff`
+- **Checkout**: `dotfiles checkout`
+
+### Installation
+- Run `./install.sh` after initial bare git checkout to set up directories and tools
+- **No unit tests**: This is a dotfiles repo - test by sourcing configs and verifying functionality
 
 ## Code Style Guidelines
 
@@ -39,19 +58,18 @@ This is a personal dotfiles repository containing configuration files for Linux/
 - Function names: `snake_case` with descriptive names
 - Comments: Use `#` for single-line, explain non-obvious logic
 - Shebang: Use `#!/usr/bin/env bash` for better portability
+- Constants: Use `readonly` keyword: `readonly VERSION="1.0"`
+- Log with color: `echo -e "[${COLOR_GREEN}INFO${COLOR_RESET}] Message"`
 
 ### Configuration Files
 - Follow application-specific conventions
 - Group related settings with comments as separators
 - Use descriptive variable names
-- Keep user-specific settings in separate files when possible
 - Document complex configurations with inline comments
 
 ### Imports and Source Files
-- Source files using relative or absolute paths: `source ~/.config/app/config`
-- Use guard patterns to prevent double-sourcing: `[[ -n "$LOADED_CONFIG" ]] && return`
-- Place environment variables in `~/.profile` or `~/.zshenv`
-- Place aliases in shell-specific config files
+- Source files using absolute paths: `source ~/.bash/aliases`
+- Use guard patterns: `[[ -n "$LOADED_CONFIG" ]] && return`
 
 ### Naming Conventions
 - **Files**: `snake_case` or `kebab-case` for scripts, `.` prefix for configs
@@ -65,6 +83,8 @@ This is a personal dotfiles repository containing configuration files for Linux/
 - Provide meaningful error messages
 - Use `trap` for cleanup on script exit
 - Validate dependencies before execution
+- Check for directory existence: `[ -d "$dir" ] && echo "exists" || echo "not found"`
+- Check for command existence: `command -v "$pkg" &> /dev/null`
 
 ### Documentation
 - Add header comments to complex scripts explaining purpose and dependencies
@@ -78,6 +98,8 @@ This is a personal dotfiles repository containing configuration files for Linux/
 - Shell configs in `~/.zshrc`, `~/.bashrc`, etc.
 - System-wide configs in appropriate `/etc/` locations (document separately)
 - Use subdirectories for related configs (e.g., `~/.config/nvim/lua/`)
+- **This repo**: Bash configs split into `.bash/` subdirectory (aliases, ps1)
+- **VS Code**: Settings in `.vscode/settings.json` with file associations for shell scripts
 
 ### Git Workflow
 - Commit related changes together
@@ -85,6 +107,8 @@ This is a personal dotfiles repository containing configuration files for Linux/
 - Test configs in a safe environment before committing
 - Be careful with sensitive data (never commit API keys, passwords)
 - Use `.gitignore` for machine-specific files
+- **This repo**: Uses bare git setup with `.dotfiles` as git dir (see .gitignore)
+- Aliases defined in `~/.bash/aliases` use the dotfiles alias for convenience
 
 ### Testing
 - Test shell scripts with `-n` flag first
@@ -92,6 +116,7 @@ This is a personal dotfiles repository containing configuration files for Linux/
 - Verify bare git checkout works correctly
 - Check for syntax errors before committing
 - Test on fresh system when possible
+- **For bash configs**: Source file and verify aliases/functions work: `source ~/.bashrc`
 
 ### Security Considerations
 - Never commit secrets or credentials
@@ -101,7 +126,32 @@ This is a personal dotfiles repository containing configuration files for Linux/
 - Validate external inputs in scripts
 
 ### Platform Specificity
-- This repository targets Arch Linux (based on README)
-- Note distribution-specific commands (pacman vs apt)
-- Use conditional logic for cross-platform compatibility when needed
-- Document OS requirements for each config
+- This repository targets Arch Linux (uses pacman)
+
+## Common Patterns
+
+### Bare Git Setup
+This repository uses a bare git setup with the following pattern:
+```bash
+git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME <command>
+```
+
+### Modular Bash Configuration
+The `.bashrc` sources files from `.bash/` directory for modularity:
+ - `~/.bash/aliases` - Git aliases and other shortcuts
+ - `~/.bash/ps1` - Custom prompt configuration
+ - `~/.bash/colors` - ANSI color variables for logging
+ - `~/.bash/variables` - Environment variable exports
+ - `~/.bash/path` - PATH manipulation
+
+## Troubleshooting
+
+### Bare Git Issues
+- If `dotfiles checkout` conflicts: Move existing files to `.dotfiles-backup/`
+- If dotfiles alias doesn't work: Source `~/.bash/aliases` or restart shell
+- To verify setup: Run `dotfiles status` to check repository state
+
+### Configuration Loading Issues
+- Test bash config: `bash -c 'source ~/.bashrc; echo OK'`
+- Check file paths: Ensure sourced files exist before sourcing
+- Verify permissions: Ensure shell scripts are readable

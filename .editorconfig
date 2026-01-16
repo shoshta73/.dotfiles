@@ -12,3 +12,15 @@ max_line_length = 120
 
 [*.md]
 trim_trailing_whitespace = false
+
+[.bashrc]
+indent_size = 2
+tab_width = 2
+
+[.profile]
+indent_size = 2
+tab_width = 2
+
+[.bash_profile]
+indent_size = 2
+tab_width = 2

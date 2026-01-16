@@ -1,0 +1,44 @@
+export TERM=xterm-256color
+# export HISTCONTROL=ignoredups:erasedups
+
+export PREFIX="$HOME/opt"
+export GOPATH="$HOME/opt/go"
+export BUN_INSTALL="$HOME/.bun"
+
+if command -v code &> /dev/null; then
+  export VISUAL="code --wait"
+else
+  if command -v neovide &> /dev/null; then
+    export VISUAL="neovide"
+  else
+    if command -v nvim &> /dev/null; then
+      export VISUAL="nvim"
+    else
+      if command -v vim &> /dev/null; then
+        export VISUAL="vim"
+      else
+        export VISUAL="nano"
+      fi
+    fi
+  fi
+fi
+
+if command -v nvim &> /dev/null; then
+  export EDITOR="nvim"
+else
+  if command -v vim &> /dev/null; then
+    export EDITOR="vim"
+  else
+    export EDITOR="nano"
+  fi
+fi
+
+if command -v alacritty &> /dev/null; then
+  export TERMINAL="alacritty"
+else
+  if command -v kitty &> /dev/null; then
+    export TERMINAL="kitty"
+  else
+    export TERMINAL="xterm"
+  fi
+fi

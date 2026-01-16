@@ -1,0 +1,19 @@
+if [ -d "$HOME/bin" ]; then
+  export PATH="$HOME/bin:$PATH"
+fi
+
+if [ -d "$HOME/.local/bin" ]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
+if [ -d "$HOME/opt/bin" ]; then
+  export PATH="$HOME/opt/bin:$PATH"
+fi
+
+if [ -n "$GOPATH" ] && [ -d "$GOPATH/bin" ]; then
+  export PATH="$GOPATH/bin:$PATH"
+fi
+
+if [ -d "$BUN_INSTALL" ]; then
+  export PATH="$BUN_INSTALL/bin:$PATH"
+fi

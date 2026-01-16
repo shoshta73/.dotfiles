@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Element
+Comment=Matrix Client
+Exec=/home/borna/opt/element-desktop-1.12.8/element-desktop %u
+Icon=/home/borna/opt/element-desktop-1.12.8/resources/build/icon.png
+Type=Application
+Terminal=false
+Categories=Network;Chat;
+MimeType=x-scheme-handler/io.element.desktop;
