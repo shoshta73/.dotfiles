@@ -1,35 +1,20 @@
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
 if command -v eza &> /dev/null; then
   alias ls='eza -al --color=always --group-directories-first' # my preferred listing
-  alias la='eza -a --color=always --group-directories-first'  # all files and dirs
-  alias ll='eza -l --color=always --group-directories-first'  # long format
+  alias la='eza -al --color=always --group-directories-first'  # all files and dirs
+  alias ll='eza -alh --color=always --group-directories-first'  # long format
   alias lt='eza -aT --color=always --group-directories-first' # tree listing
   alias l.='eza -al --color=always --group-directories-first ../' # ls on the PARENT directory
   alias l..='eza -al --color=always --group-directories-first ../../' # ls on directory 2 levels up
   alias l...='eza -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
 else
-  alias ls='ls -alh --color=always --group-directories-first' # my preferred listing
-  alias la='ls -a --color=always --group-directories-first'  # all files and dirs
-  alias ll='ls -l --color=always --group-directories-first'  # long format
+  alias ls='ls -al --color=always --group-directories-first' # my preferred listing
+  alias la='ls -al --color=always --group-directories-first'  # all files and dirs
+  alias ll='ls -alh --color=always --group-directories-first'  # long format
   alias lt='ls -aT --color=always --group-directories-first' # tree listing
   alias l.='ls -al --color=always --group-directories-first ../' # ls on the PARENT directory
   alias l..='ls -al --color=always --group-directories-first ../../' # ls on directory 2 levels up
   alias l...='ls -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
 fi
-
-if command -v bat &> /dev/null; then
-  alias cat='bat'
-fi
-
-if command -v nvim &> /dev/null; then
-  alias vim='nvim'
-fi
-
-alias cls='clear -x'
-alias rm='rm -i'
-alias cp='cp -i'
-alias mkdir='mkdir -p'
 
 cd ()
 {
@@ -39,3 +24,22 @@ cd ()
 		z ~ && ls
 	fi
 }
+
+alias q='exit'
+
+alias cls='clear -x'
+alias c='clear -x'
+
+alias mkdirs='mkdir -p'
+alias mkdirg='mkdir $1 && cd $1'
+alias mkdirsg='mkdir -p $1 && cd $1'
+
+if command -v nvim &> /dev/null; then
+  alias vim='nvim'
+fi
+
+if command -v bat &> /dev/null; then
+  alias cat='bat'
+fi
+
+alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
