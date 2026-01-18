@@ -2,7 +2,7 @@ export TERM=xterm-256color
 # export HISTCONTROL=ignoredups:erasedups
 
 export PREFIX="$HOME/opt"
-export GOPATH="$HOME/opt/go"
+export ROOT="$HOME/opt/go"
 export BUN_INSTALL="$HOME/.bun"
 
 if command -v code &> /dev/null; then
