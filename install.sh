@@ -44,12 +44,13 @@ readonly PACMAN_PACKAGES=(
   atuin
   alacritty
   kitty
-  neovim
-  neovide
+  neovim # TODO: Remove
+  neovide # TODO: Remove
   lua
   tldr
   zoxide
   go
+  helix
 )
 
 readonly YAY_PACKAGES=(
@@ -59,11 +60,11 @@ readonly YAY_PACKAGES=(
 )
 
 readonly CARGO_PACKAGES=(
-  tree-sitter-cli
+  tree-sitter-cli #? Is this needed
 )
 
 readonly GO_PACKAGES=(
-  github.com/joshmedeski/sesh/v2@latest
+  github.com/joshmedeski/sesh/v2@latest # TODO: clone -> build
 )
 
 function log_info() {

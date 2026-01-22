@@ -1,15 +1,12 @@
+source $HOME/.bash/variables
+source $HOME/.bash/path
+
 case $- in
   *i*) ;;
   *) return ;;
 esac
 
 source $HOME/.bash/colors
-
-source $HOME/.bash/variables
-source $HOME/.bash/path
-
-source $HOME/.bash/ps1
-
 source $HOME/.bash/aliases
 
 [[ -f $HOME/.cargo/env ]] && source $HOME/.cargo/env

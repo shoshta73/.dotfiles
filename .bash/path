@@ -1,3 +1,5 @@
+# TODO: inline this somewhere, keep everything a single file
+
 if [ -d "$HOME/bin" ]; then
   export PATH="$HOME/bin:$PATH"
 fi

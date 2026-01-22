@@ -1,9 +1,12 @@
 theme = "catppuccin_mocha"
 
 [editor]
-line-number = "relative"
+auto-pairs = false
+gutters = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
 cursorline = true
+line-number = "relative"
 color-modes = true
+scrolloff = 10
 
 [editor.cursor-shape]
 insert = "bar"
@@ -12,9 +15,3 @@ select = "underline"
 
 [editor.indent-guides]
 render = true
-
-[keys.insert]
-j = { k = "normal_mode" }
-
-[keys.select]
-j = { k = "normal_mode" }
