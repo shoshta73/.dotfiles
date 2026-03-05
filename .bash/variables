@@ -1,12 +1,13 @@
 # TODO: inline this somewhere, keep everything a single file
 
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 export PREFIX="$HOME/opt"
 export ROOT="$HOME/opt/go"
 export BUN_INSTALL="$HOME/.bun"
 
-export VISUAL="code --wait"
-export EDITOR="hx"
+# export VISUAL="code --wait"
+# export EDITOR="hx"
+export EDITOR="nvim"
 export TERMINAL="alacritty"
 export BROWSER="brave"

@@ -18,7 +18,7 @@ else
   alias l...='ls -al --color=always --group-directories-first ../../../' # ls on directory 3 levels up
 fi
 
-cd ()
+function cd()
 {
 	if [ -n "$1" ]; then
 		z "$@" && ls
@@ -32,12 +32,14 @@ alias q='exit'
 alias cls='clear -x'
 alias c='clear -x'
 
+
 function mkdirg() {
-  if [ -n "$1" ]; then
-    mkdir -p $1 && cd $1
-  else
-    echo -e "${COLOR_RED}mkdirg: missing argument${COLOR_RESET}"
+  if [ "$#" -ne 1 ]; then
+    echo -e "${COLOR_RED}mkdirg: expected exactly one argument${COLOR_RESET}"
+    return 1
   fi
+
+  mkdir -p -- "$1" && cd -- "$1"
 }
 
 alias vim='nvim'
@@ -47,3 +49,88 @@ if command -v bat &> /dev/null; then
 fi
 
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+function tns() {
+  if [ -z "$1" ]; then
+    echo -e "${COLOR_RED}tns: expected exactly one argument${COLOR_RESET}"
+    return 1
+  fi
+
+  tmux new-session -s "$1"
+}
+
+function tks() {
+  if [ -z "$1" ]; then
+    echo -e "${COLOR_RED}tks: expected exactly one argument${COLOR_RESET}"
+    return 1
+  fi
+
+  tmux kill-session -t "$1"
+}
+
+function tcs() {
+  sesh connect $(sesh list -t | fzf)
+}
+
+alias tl='sesh list -t'
+alias td='tmux detach'
+
+fgf() {
+  local job
+  job=$(jobs | fzf) || return
+
+  # Extract job number (number inside square brackets)
+  job=$(echo "$job" | sed -n 's/^\[\([0-9]\+\)\].*/\1/p')
+
+  [[ -n "$job" ]] && fg "%$job"
+}
+
+# findfile
+ff() {
+  fd . | fzf --preview "bat --style=numbers --color=always {}"
+}
+
+# open file in zed
+rfzed() {
+  local result
+  result=$(rg --line-number --no-heading "$1" | fzf) || return
+
+  file=$(echo "$result" | cut -d: -f1)
+  line=$(echo "$result" | cut -d: -f2)
+
+  zed "$file:$line"
+}
+
+# open file in code
+rfcode() {
+  local result
+  result=$(rg --line-number --no-heading --color=always "$1" \
+    | fzf --ansi) || return
+
+  file=$(echo "$result" | cut -d: -f1)
+  line=$(echo "$result" | cut -d: -f2)
+
+  code -g "$file:$line"
+}
+
+# open file in nvim
+rfvim() {
+  local result
+  result=$(rg --line-number --no-heading --color=always "$1" \
+    | fzf --ansi) || return
+
+  local file line
+  file=$(echo "$result" | cut -d: -f1)
+  line=$(echo "$result" | cut -d: -f2)
+
+  nvim +$line "$file"
+}
+
+alias rfnvim='rfvim'
+
+frg() {
+  rg --line-number --no-heading --color=always "$1" \
+  | fzf --ansi \
+  | cut -d: -f1,2 \
+  | xargs -r nvim
+}

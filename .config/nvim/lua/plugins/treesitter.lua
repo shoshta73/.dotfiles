@@ -11,6 +11,8 @@ return {
         "lua",
         "vim",
         "bash",
+        "c",
+        "cpp"
       },
       sync_install = false,
       highlight = {
