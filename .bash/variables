@@ -11,3 +11,5 @@ export BUN_INSTALL="$HOME/.bun"
 export EDITOR="nvim"
 export TERMINAL="alacritty"
 export BROWSER="brave"
+
+export ZIGHOME="$HOME/Software/zig/zig-x86_64-linux-0.15.2/"

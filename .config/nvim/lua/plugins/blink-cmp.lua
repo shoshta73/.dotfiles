@@ -29,9 +29,34 @@ return {
     --- @type blink.cmp.Config
     opts = {
       keymap = {
-        preset = 'default',
-        -- ['<Tab>'] = { 'select_and_accept', 'fallback' },
-        -- ['<S-Tab>'] = { 'select_prev', 'fallback' },
+        ["<C-k>"] = { "select_prev", "show_signature", "hide_signature", "fallback" },
+				["<C-j>"] = { "select_next", "fallback" },
+				["<C-c>"] = { "cancel", "fallback" },
+				["<CR>"] = { "select_and_accept", "fallback" },
+				["<C-u>"] = { "scroll_documentation_up", "fallback" },
+				["<C-d>"] = { "scroll_documentation_down", "fallback" },
+				["<C-Space>"] = { "show", "fallback" },
+				-- Tab behavior: navigate forward through suggestions or snippet placeholders
+				["<Tab>"] = {
+					function(cmp)
+						if cmp.snippet_active() then
+							return cmp.snippet_forward()
+						else
+							return cmp.select_next()
+						end
+					end,
+					"fallback",
+				},
+				["<S-Tab>"] = {
+					function(cmp)
+						if cmp.snippet_active() then
+							return cmp.snippet_backward()
+						else
+							return cmp.select_prev()
+						end
+					end,
+					"fallback",
+				},
       },
 
       appearance = {

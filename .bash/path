@@ -31,3 +31,7 @@ fi
 if [ -d "$HOME/.lmstudio" ]; then
   export PATH="$PATH:$HOME/.lmstudio/bin"
 fi
+
+if [ -d "$ZIGHOME" ]; then
+  export PATH="$PATH:$ZIGHOME"
+fi

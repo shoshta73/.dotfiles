@@ -1,0 +1,53 @@
+BasedOnStyle: Google
+---
+Language: C
+
+UseTab: Never
+DerivePointerAlignment: false
+PointerAlignment: Right
+ReferenceAlignment: Right
+
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Project headers
+  - Regex: '^(<|")corelib/'
+    Priority: 4
+
+  - Regex: '^"internal/'
+    Priority: 3
+
+  # Std headers
+  - Regex: '<[[:alnum:]_.]+>'
+    Priority: 2
+
+  # Other headers
+  - Regex: '.*'
+    Priority: 1
+
+---
+Language: Cpp
+Standard: Latest
+
+UseTab: Never
+DerivePointerAlignment: false
+PointerAlignment: Right
+ReferenceAlignment: Right
+
+WrapNamespaceBodyWithEmptyLines: Always
+
+IncludeBlocks: Regroup
+IncludeCategories:
+  # Project headers
+  - Regex: '^(<|")corelib/'
+    Priority: 4
+
+  - Regex: '^"internal/'
+    Priority: 3
+
+  # Std headers
+  - Regex: '<[[:alnum:]_.]+>'
+    Priority: 2
+
+  # Other headers
+  - Regex: '.*'
+    Priority: 1
